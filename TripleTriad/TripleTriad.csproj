@@ -42,9 +42,10 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="Card.cs" />
-    <Compile Include="PlayerColor.cs" />
-    <Compile Include="Element.cs" />
+    <Compile Include="MoveNotValidException.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Field.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Hand.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="Move.cs" />
