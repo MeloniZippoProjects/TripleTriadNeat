@@ -7,6 +7,7 @@
         /// </summary>
         public enum Element
         {
+            None,
             Earth,
             Fire,
             Water,
