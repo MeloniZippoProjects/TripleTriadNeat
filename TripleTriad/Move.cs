@@ -8,8 +8,8 @@ namespace TripleTriad
 {
     public class Move
     {
-        public int BoardX { get; set; }
-        public int BoardY { get; set; }
+        public int BoardRow { get; set; }
+        public int BoardColumn { get; set; }
         public Card Card { get; set; }
     }
 }
