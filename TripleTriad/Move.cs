@@ -8,8 +8,8 @@ namespace TripleTriad
 {
     public class Move
     {
-        public int BoardRow { get; set; }
-        public int BoardColumn { get; set; }
+        public uint BoardRow { get; set; }
+        public uint BoardColumn { get; set; }
         public Card Card { get; set; }
 
         public Move(uint row, uint column, Card card)
@@ -17,9 +17,9 @@ namespace TripleTriad
             Card = card ?? throw new ArgumentNullException(nameof(card), "A card must be specified");
 
             if (row > 2)
-                throw new ArgumentOutOfRangeException(nameof(x), "X coordinate must be in range [0,2]");
+                throw new ArgumentOutOfRangeException(nameof(row), "X coordinate must be in range [0,2]");
             if (column > 2)
-                throw new ArgumentOutOfRangeException(nameof(x), "X coordinate must be in range [0,2]");
+                throw new ArgumentOutOfRangeException(nameof(column), "X coordinate must be in range [0,2]");
 
             BoardRow = row;
             BoardColumn = column;

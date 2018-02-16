@@ -21,7 +21,7 @@ namespace TripleTriad
 
         public void PlayMove(Move move)
         {
-            var field = Fields[move.BoardX, move.BoardY];
+            var field = Fields[move.BoardRow, move.BoardColumn];
 
             if(field.Color != PlayerColor.None)
                 throw new MoveNotValidException();

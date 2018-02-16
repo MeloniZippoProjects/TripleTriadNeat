@@ -53,7 +53,7 @@ namespace TripleTriad
             if (random.NextDouble() < ElementAppearRate)
             {
                 //choose a random Element
-                Element = (Element)random.Next(ElementsNumber);
+                Element = (Element)random.Next(1, ElementsNumber);
             }
 
             IsWall = isWall;
