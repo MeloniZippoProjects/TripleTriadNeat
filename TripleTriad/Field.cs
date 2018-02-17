@@ -7,7 +7,7 @@ using static TripleTriad.Constants;
 
 namespace TripleTriad
 {
-    class Field
+    public class Field
     {
         /// <summary>
         /// If this field is not null, it contains the card placed
@@ -48,6 +48,8 @@ namespace TripleTriad
         public Field Below { get; set; }
         public Field LeftSide { get; set; }
         public Field RightSide { get; set; }
+
+        public bool IsFree => Color == PlayerColor.None;
 
         public Field()
         {

@@ -8,21 +8,24 @@ namespace TripleTriad
 {
     public class Move
     {
-        public uint BoardRow { get; set; }
-        public uint BoardColumn { get; set; }
+        public uint Row { get; set; }
+        public uint Column { get; set; }
         public Card Card { get; set; }
 
-        public Move(uint row, uint column, Card card)
+        public bool IsValid
         {
-            Card = card ?? throw new ArgumentNullException(nameof(card), "A card must be specified");
+            get
+            {
+                if (Card == null || Row > 2 || Column > 2)
+                    return false;
+                else
+                    return true;
+            }
+        }
 
-            if (row > 2)
-                throw new ArgumentOutOfRangeException(nameof(row), "X coordinate must be in range [0,2]");
-            if (column > 2)
-                throw new ArgumentOutOfRangeException(nameof(column), "X coordinate must be in range [0,2]");
-
-            BoardRow = row;
-            BoardColumn = column;
+        public bool IsLegal(Board board)
+        {
+            return IsValid && board.Fields[Row, Column].IsFree;
         }
     }
 }

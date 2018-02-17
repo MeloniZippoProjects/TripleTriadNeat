@@ -10,7 +10,7 @@ namespace TripleTriad
 {
     public class Board
     {
-        private Field[,] Fields { get; } = new Field[3, 3];
+        public Field[,] Fields { get; } = new Field[3, 3];
         
         public Rules Rules { get; set; }
 
@@ -47,10 +47,10 @@ namespace TripleTriad
 
         public void PlayMove(Move move)
         {
-            var field = Fields[move.BoardRow, move.BoardColumn];
+            var field = Fields[move.Row, move.Column];
 
-            if(field.Color != PlayerColor.None)
-                throw new MoveNotValidException();
+            if(!move.IsLegal(this))
+                throw new MoveNotLegalException();
         }
     }
 }
