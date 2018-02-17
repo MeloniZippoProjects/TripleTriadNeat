@@ -1,7 +1,28 @@
-﻿namespace TripleTriad
+﻿using System;
+
+namespace TripleTriad
 {
     public static class Constants
     {
+        /// <summary>
+        /// Enum for game rules
+        /// </summary>
+        [Flags]
+        public enum Rules
+        {
+            None = 0,
+            Plus = 1,
+            Same = 2,
+            Samewall = 4,
+            Elemental = 8,
+            Open = 16,
+            One = 32,
+            All = 64,
+            Direct = 128,
+            Difference = 256,
+            Random = 1024
+        }
+
         /// <summary>
         /// Enum for element types
         /// </summary>

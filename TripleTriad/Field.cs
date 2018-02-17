@@ -18,17 +18,17 @@ namespace TripleTriad
         /// <summary>
         /// The Board which hosts this Field instance
         /// </summary>
-        private Board Board { get; set; }
+        public Board Board { get; set; }
 
         /// <summary>
         /// The Board row in which this field exists
         /// </summary>
-        private int BoardRow;
+        public int Row { get; set; }
 
         /// <summary>
         /// The Board column in which this field exists
         /// </summary>
-        private int BoardColumn;
+        public int Column { get; set; }
 
         /// <summary>
         /// If this field is not null, it contains the element
@@ -40,13 +40,17 @@ namespace TripleTriad
         /// If this field is not null, it contains the
         /// color of the player
         /// </summary>
-        public PlayerColor Color { get; set; }
+        public PlayerColor Color { get; set; } = PlayerColor.None;
 
         public bool IsWall { get; set; }
 
-        public Field(bool isWall = false)
+        public Field Above { get; set; }
+        public Field Below { get; set; }
+        public Field LeftSide { get; set; }
+        public Field RightSide { get; set; }
+
+        public Field()
         {
-            Color = PlayerColor.None;
             //Randomly put Elements on the board
             Random random = new Random(DateTime.Now.Millisecond);
             //treshold for having an Element appear
@@ -55,8 +59,6 @@ namespace TripleTriad
                 //choose a random Element
                 Element = (Element)random.Next(1, ElementsNumber);
             }
-
-            IsWall = isWall;
         }
     }
 }
