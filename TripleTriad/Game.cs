@@ -26,8 +26,9 @@ namespace TripleTriad
             //the game is made by 9 moves
             for (int i = 0; i < 9; ++i)
             {
-                Move move = players[i % 2].GetNextMove();
-                Board.PlayMove(move);
+                IPlayer player = players[i % 2];
+                Move move = player.GetNextMove();
+                Board.PlayMove(move);   //todo: this can throw. Handle or prevent this
             }
 
             return Board.GetWinner();

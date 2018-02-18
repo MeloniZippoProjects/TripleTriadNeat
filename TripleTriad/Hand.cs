@@ -10,6 +10,7 @@ namespace TripleTriad
     {
         private Card[] Cards { get; set; }
 
+        //todo: justify side effect. How to read hand without emptying it? Why not use a List and remove card after move committed?
         public Card GetCard(int index)
         {
             var card = Cards[index];

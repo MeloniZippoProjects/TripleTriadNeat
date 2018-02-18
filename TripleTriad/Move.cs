@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static TripleTriad.Constants;
 
 namespace TripleTriad
 {
@@ -10,18 +11,10 @@ namespace TripleTriad
     {
         public uint Row { get; set; }
         public uint Column { get; set; }
+        public PlayerColor Color { get; set; }
         public Card Card { get; set; }
 
-        public bool IsValid
-        {
-            get
-            {
-                if (Card == null || Row > 2 || Column > 2)
-                    return false;
-                else
-                    return true;
-            }
-        }
+        public bool IsValid => Card != null && Color != PlayerColor.None && Row <= 2 && Column <= 2;
 
         public bool IsLegal(Board board)
         {
