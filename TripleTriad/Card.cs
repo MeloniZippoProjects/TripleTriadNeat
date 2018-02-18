@@ -12,28 +12,55 @@ namespace TripleTriad
     /// </summary>
     public class Card
     {
-        public uint Top { get; set; }
-        public uint Bot { get; set; }
-        public uint Left { get; set; }
-        public uint Right { get; set; }
         public Element Element { get; set; }
+        public Field ParentField { get; set; }
 
-        public Card(uint top, uint bot, uint left, uint right, Element element)
+        private uint top;
+        public uint Top
         {
-            if (top > 10)
-                throw new ArgumentOutOfRangeException(nameof(top), top, "Top value must be between 1 and 10");
-            if (bot > 10)
-                throw new ArgumentOutOfRangeException(nameof(top), top, "Bottom value must be between 1 and 10");
-            if (left > 10)
-                throw new ArgumentOutOfRangeException(nameof(top), top, "Left value must be between 1 and 10");
-            if (right > 10)
-                throw new ArgumentOutOfRangeException(nameof(top), top, "Right value must be between 1 and 10");
+            get => ParentField.Element == Element.None ? top : (Element == ParentField.Element ? top + 1 : top - 1);
+            set
+            {
+                if (value < 1 || value > 10)
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Top value must be between 1 and 10");
+                top = value;
+            }
+        }
 
-            Top = top;
-            Bot = bot;
-            Left = left;
-            Right = right;
-            Element = element;
+        private uint bottom;
+        public uint Bottom
+        {
+            get => ParentField.Element == Element.None ? bottom : (Element == ParentField.Element ? bottom + 1 : bottom - 1);
+            set
+            {
+                if (value < 1 || value > 10)
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Bottom value must be between 1 and 10");
+                bottom = value;
+            }
+        }
+
+        private uint left;
+        public uint Left
+        {
+            get => ParentField.Element == Element.None ? left : (Element == ParentField.Element ? left + 1 : left - 1);
+            set
+            {
+                if (value < 1 || value > 10)
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Left value must be between 1 and 10");
+                left = value;
+            }
+        }
+
+        private uint right;
+        public uint Right
+        {
+            get => ParentField.Element == Element.None ? right : (Element == ParentField.Element ? right + 1 : right - 1);
+            set
+            {
+                if (value < 1 || value > 10)
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Right value must be between 1 and 10");
+                right = value;
+            }
         }
     }
 }
