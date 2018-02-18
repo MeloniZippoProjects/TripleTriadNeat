@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static TripleTriad.Constants;
@@ -14,6 +15,11 @@ namespace TripleTriad
     {
         public Element Element { get; set; }
         public Field ParentField { get; set; }
+
+        public uint GetSide(CardSide side)
+        {
+            return (uint) this.GetType().GetRuntimeProperty(side.ToString()).GetValue(this);
+        }
 
         private uint top;
         public uint Top

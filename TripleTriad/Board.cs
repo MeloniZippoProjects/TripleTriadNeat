@@ -81,6 +81,22 @@ namespace TripleTriad
 
             field.Color = move.Color;
             field.Card = move.Card;
+
+            ApplyRules(field);
+        }
+
+        private void ApplyRules(Field field)
+        {
+            List<Field> toChange = new List<Field>();
+            List<Field> toCombo = new List<Field>();
+
+            foreach (Boundary boundary in field.Boundaries)
+            {
+                if(boundary.IsBaseRuleCapture)
+                    toChange.Add(boundary.Neighbour);
+            }
+
+            //fine regola base
         }
     }
 }

@@ -13,7 +13,16 @@ namespace TripleTriad
         /// If this field is not null, it contains the card placed
         /// on the field.
         /// </summary>
-        public Card Card { get; set; }
+        private Card card;
+        public Card Card
+        {
+            get => card;
+            set
+            {
+                card = value;
+                Card.ParentField = this;
+            }
+        }
 
         /// <summary>
         /// The Board which hosts this Field instance
@@ -49,6 +58,49 @@ namespace TripleTriad
         public Field LeftSide { get; set; }
         public Field RightSide { get; set; }
 
+        //todo: could be cached for performance
+        public IEnumerable<Boundary> Boundaries => new List<Boundary>()
+        {
+            new Boundary()
+            {
+                Origin = this,
+                Neighbour = Above,
+                OriginSide = CardSide.Top,
+                NeighbourSide = CardSide.Bottom
+            },
+            new Boundary()
+            {
+                Origin = this,
+                Neighbour = RightSide,
+                OriginSide = CardSide.Right,
+                NeighbourSide = CardSide.Left
+            },
+            new Boundary()
+            {
+                Origin = this,
+                Neighbour = Below,
+                OriginSide = CardSide.Bottom,
+                NeighbourSide = CardSide.Top
+            },
+            new Boundary()
+            {
+                Origin = this,
+                Neighbour = LeftSide,
+                OriginSide = CardSide.Left,
+                NeighbourSide = CardSide.Right
+            }
+        };
+
         public bool IsFree => Color == PlayerColor.None;
+    }
+
+    public class Boundary
+    {
+        public Field Origin;
+        public Field Neighbour;
+        public CardSide OriginSide;
+        public CardSide NeighbourSide;
+
+        public bool IsBaseRuleCapture => Origin.Color != Neighbour.Color && Origin.Card.GetSide(OriginSide) > Neighbour.Card.GetSide(NeighbourSide);
     }
 }

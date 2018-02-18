@@ -49,6 +49,17 @@ namespace TripleTriad
             None
         }
 
+        /// <summary>
+        /// Sides of a card
+        /// </summary>
+        public enum CardSide
+        {
+            Top,
+            Right,
+            Bottom,
+            Left
+        }
+
         public const double ElementAppearRate = 0.15;
         public const int ElementsNumber = (int) Element.Ice + 1;
     }
