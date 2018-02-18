@@ -87,16 +87,56 @@ namespace TripleTriad
 
         private void ApplyRules(Field field)
         {
-            List<Field> toChange = new List<Field>();
-            List<Field> toCombo = new List<Field>();
+            List<Field> comboCaptured = new List<Field>();
+            if((rules | Rules.Same) == Rules.Same)
+                comboCaptured.AddRange(ApplySameRule(field));
 
-            foreach (Boundary boundary in field.Boundaries)
+            if ((rules | Rules.Plus) == Rules.Same)
+                comboCaptured.AddRange(ApplyPlusRule(field));
+
+            while (comboCaptured.Count > 0)
             {
-                if(boundary.IsBaseRuleCapture)
-                    toChange.Add(boundary.Neighbour);
+                foreach (Field capturedField in comboCaptured)
+                    capturedField.Color = field.Color;
+
+                List<Field> nextComboCaptured = new List<Field>();
+                foreach(Field comboField in comboCaptured)
+                    nextComboCaptured.AddRange(ApplyBaseRule(comboField));
+
+                comboCaptured = nextComboCaptured;
             }
 
-            //fine regola base
+            var baseCaptured = ApplyBaseRule(field);
+            foreach (Field capturedField in baseCaptured)
+                capturedField.Color = field.Color;
+        }
+
+        private static IEnumerable<Field> ApplyBaseRule(Field field)
+        {
+            return 
+                from boundary in field.Boundaries
+                where boundary.IsBaseRuleCapture
+                select boundary.Neighbour;
+        }
+
+        private static IEnumerable<Field> ApplySameRule(Field field)
+        {
+            var candidateBoundaries = field.Boundaries.Where(b => b.IsSameCandidate);
+            if (candidateBoundaries.Count() > 1)
+                return candidateBoundaries
+                    .Where(b => b.Origin.Color != b.Neighbour.Color)
+                    .Select(b => b.Neighbour);
+            else
+                return null;
+        }
+
+        private static IEnumerable<Field> ApplyPlusRule(Field field)
+        {
+            return field.ActiveBoundaries
+                .Where(b => 
+                    field.ActiveBoundaries
+                        .Any(b2 => b != b2 && b.Sum == b2.Sum))
+                .Select(b => b.Neighbour);
         }
     }
 }

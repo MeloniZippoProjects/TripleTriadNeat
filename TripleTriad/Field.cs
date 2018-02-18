@@ -91,6 +91,8 @@ namespace TripleTriad
             }
         };
 
+        public IEnumerable<Boundary> ActiveBoundaries => Boundaries.Where(b => b.IsActive);
+
         public bool IsFree => Color == PlayerColor.None;
     }
 
@@ -101,6 +103,16 @@ namespace TripleTriad
         public CardSide OriginSide;
         public CardSide NeighbourSide;
 
-        public bool IsBaseRuleCapture => Origin.Color != Neighbour.Color && Origin.Card.GetSide(OriginSide) > Neighbour.Card.GetSide(NeighbourSide);
+        public bool IsActive => Origin.Card != null && Neighbour.Card != null;
+
+        public bool IsBaseRuleCapture => 
+            IsActive && Origin.Color != Neighbour.Color &&
+            Origin.Card.GetSide(OriginSide) > Neighbour.Card.GetSide(NeighbourSide);
+
+        public bool IsSameCandidate =>
+            IsActive && Origin.Card.GetSide(OriginSide) == Neighbour.Card.GetSide(NeighbourSide);
+
+        public uint Sum => 
+            IsActive ? 0 : Origin.Card.GetSide(OriginSide) + Neighbour.Card.GetSide(NeighbourSide);
     }
 }

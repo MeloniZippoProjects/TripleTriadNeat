@@ -18,7 +18,7 @@ namespace TripleTriad
 
         public uint GetSide(CardSide side)
         {
-            return (uint) this.GetType().GetRuntimeProperty(side.ToString()).GetValue(this);
+            return (uint) typeof(Card).GetRuntimeProperty(side.ToString()).GetValue(this);
         }
 
         private uint top;
