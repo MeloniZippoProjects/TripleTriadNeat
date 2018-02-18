@@ -11,6 +11,7 @@ namespace TripleTriad
     public class Board
     {
         public Field[,] Fields { get; } = new Field[3, 3];
+        private Field Wall;
 
         private Rules rules;
 
@@ -38,6 +39,21 @@ namespace TripleTriad
                         field.Element = Element.None;
                     }
                 }
+
+                if ((rules | Rules.Samewall) == Rules.Samewall)
+                {
+                    Wall.Card = new Card()
+                    {
+                        Top = 10,
+                        Right = 10,
+                        Bottom = 10,
+                        Left = 10
+                    };
+                }
+                else
+                {
+                    Wall.Card = null;
+                }
             }
         }
 
@@ -56,7 +72,7 @@ namespace TripleTriad
                 }
             }
             
-            Field wall = new Field()
+            Wall = new Field()
             {
                 Board = this,
                 IsWall = true,
@@ -65,10 +81,10 @@ namespace TripleTriad
 
             foreach (Field field in Fields)
             {
-                field.RightSide = field.Column == 0 ? wall : Fields[field.Row, field.Column - 1];
-                field.LeftSide = field.Column == 3 ? wall : Fields[field.Row, field.Column + 1];
-                field.Above = field.Row == 0 ? wall : Fields[field.Row - 1, field.Column];
-                field.Below = field.Row == 3 ? wall : Fields[field.Row + 1, field.Column];
+                field.RightSide = field.Column == 0 ? Wall : Fields[field.Row, field.Column - 1];
+                field.LeftSide = field.Column == 3 ? Wall : Fields[field.Row, field.Column + 1];
+                field.Above = field.Row == 0 ? Wall : Fields[field.Row - 1, field.Column];
+                field.Below = field.Row == 3 ? Wall : Fields[field.Row + 1, field.Column];
             }
         }
 
@@ -97,7 +113,7 @@ namespace TripleTriad
             while (comboCaptured.Count > 0)
             {
                 foreach (Field capturedField in comboCaptured)
-                    capturedField.Color = field.Color;
+                    capturedField.Flip();
 
                 List<Field> nextComboCaptured = new List<Field>();
                 foreach(Field comboField in comboCaptured)
@@ -108,7 +124,7 @@ namespace TripleTriad
 
             var baseCaptured = ApplyBaseRule(field);
             foreach (Field capturedField in baseCaptured)
-                capturedField.Color = field.Color;
+                capturedField.Flip();
         }
 
         private static IEnumerable<Field> ApplyBaseRule(Field field)

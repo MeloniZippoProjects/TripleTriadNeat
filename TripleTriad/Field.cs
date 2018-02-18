@@ -94,6 +94,12 @@ namespace TripleTriad
         public IEnumerable<Boundary> ActiveBoundaries => Boundaries.Where(b => b.IsActive);
 
         public bool IsFree => Color == PlayerColor.None;
+
+        public void Flip()
+        {
+            if (!IsWall && Color != PlayerColor.None)
+                Color = (Color == PlayerColor.Blue) ? PlayerColor.Red : PlayerColor.Blue;
+        }
     }
 
     public class Boundary

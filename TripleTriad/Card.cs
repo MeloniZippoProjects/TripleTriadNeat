@@ -24,7 +24,8 @@ namespace TripleTriad
         private uint top;
         public uint Top
         {
-            get => ParentField.Element == Element.None ? top : (Element == ParentField.Element ? top + 1 : top - 1);
+            get => ParentField.Element == Element.None || ParentField.IsWall ? top : 
+                Element == ParentField.Element ? top + 1 : top - 1;
             set
             {
                 if (value < 1 || value > 10)
@@ -36,7 +37,8 @@ namespace TripleTriad
         private uint bottom;
         public uint Bottom
         {
-            get => ParentField.Element == Element.None ? bottom : (Element == ParentField.Element ? bottom + 1 : bottom - 1);
+            get => ParentField.Element == Element.None || ParentField.IsWall ? bottom : 
+                Element == ParentField.Element ? bottom + 1 : bottom - 1;
             set
             {
                 if (value < 1 || value > 10)
@@ -48,7 +50,8 @@ namespace TripleTriad
         private uint left;
         public uint Left
         {
-            get => ParentField.Element == Element.None ? left : (Element == ParentField.Element ? left + 1 : left - 1);
+            get => ParentField.Element == Element.None || ParentField.IsWall ? left :
+                    Element == ParentField.Element ? left + 1 : left - 1;
             set
             {
                 if (value < 1 || value > 10)
@@ -60,7 +63,8 @@ namespace TripleTriad
         private uint right;
         public uint Right
         {
-            get => ParentField.Element == Element.None ? right : (Element == ParentField.Element ? right + 1 : right - 1);
+            get => ParentField.Element == Element.None || ParentField.IsWall ? right : 
+                Element == ParentField.Element ? right + 1 : right - 1;
             set
             {
                 if (value < 1 || value > 10)
