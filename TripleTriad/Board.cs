@@ -11,8 +11,35 @@ namespace TripleTriad
     public class Board
     {
         public Field[,] Fields { get; } = new Field[3, 3];
-        
-        public Rules Rules { get; set; }
+
+        private Rules rules;
+
+        public Rules Rules
+        {
+            get => rules;
+            set
+            {
+                rules = value;
+                if ((rules | Rules.Elemental) == Rules.Elemental)
+                {
+                    Random random = new Random(DateTime.Now.Millisecond);
+                    foreach (var field in Fields.Cast<Field>().Where(f => !f.IsWall))
+                    {
+                        if (random.NextDouble() < ElementAppearRate)
+                        {
+                            field.Element = (Element) random.Next(1, ElementsNumber);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var field in Fields.Cast<Field>().Where(f => !f.IsWall))
+                    {
+                        field.Element = Element.None;
+                    }
+                }
+            }
+        }
 
         public Board()
         {
@@ -51,6 +78,9 @@ namespace TripleTriad
 
             if(!move.IsLegal(this))
                 throw new MoveNotLegalException();
+
+            field.Color = move.Color;
+            field.Card = move.Card;
         }
     }
 }
