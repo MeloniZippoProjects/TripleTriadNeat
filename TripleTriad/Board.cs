@@ -24,7 +24,7 @@ namespace TripleTriad
                 if ((rules & Rules.Elemental) == Rules.Elemental)
                 {
                     Random random = new Random(DateTime.Now.Millisecond);
-                    foreach (var field in Fields.Cast<Field>().Where(f => !f.IsWall))
+                    foreach (var field in Fields)
                     {
                         if (random.NextDouble() < ElementAppearRate)
                         {
@@ -34,7 +34,7 @@ namespace TripleTriad
                 }
                 else
                 {
-                    foreach (var field in Fields.Cast<Field>().Where(f => !f.IsWall))
+                    foreach (var field in Fields)
                     {
                         field.Element = Element.None;
                     }
