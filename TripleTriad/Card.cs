@@ -21,56 +21,40 @@ namespace TripleTriad
             return (uint) typeof(Card).GetRuntimeProperty(side.ToString()).GetValue(this);
         }
 
-        private uint top;
-        public uint Top
+        public CardStat Top { get; set; }
+        public CardStat Right { get; set; }
+        public CardStat Bottom { get; set; }
+        public CardStat Left { get; set; }
+    }
+
+    public class CardStat
+    {
+        public Card Card { get; set; }
+
+        private uint score;
+        public uint Score
         {
-            get => ParentField.Element == Element.None || ParentField.IsWall ? top : 
-                Element == ParentField.Element ? top + 1 : top - 1;
+            get => Card.ParentField.Element == Element.None || Card.ParentField.IsWall ? score :
+                 Card.Element == Card.ParentField.Element ? score + 1 : score - 1;
             set
             {
                 if (value < 1 || value > 10)
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Top value must be between 1 and 10");
-                top = value;
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Value must be between 1 and 10");
+                score = value;
             }
         }
 
-        private uint bottom;
-        public uint Bottom
+        public static implicit operator uint(CardStat stat)
         {
-            get => ParentField.Element == Element.None || ParentField.IsWall ? bottom : 
-                Element == ParentField.Element ? bottom + 1 : bottom - 1;
-            set
-            {
-                if (value < 1 || value > 10)
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Bottom value must be between 1 and 10");
-                bottom = value;
-            }
+            return stat.Score;
         }
 
-        private uint left;
-        public uint Left
+        public static implicit operator CardStat(uint value)
         {
-            get => ParentField.Element == Element.None || ParentField.IsWall ? left :
-                    Element == ParentField.Element ? left + 1 : left - 1;
-            set
+            return new CardStat()
             {
-                if (value < 1 || value > 10)
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Left value must be between 1 and 10");
-                left = value;
-            }
-        }
-
-        private uint right;
-        public uint Right
-        {
-            get => ParentField.Element == Element.None || ParentField.IsWall ? right : 
-                Element == ParentField.Element ? right + 1 : right - 1;
-            set
-            {
-                if (value < 1 || value > 10)
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Right value must be between 1 and 10");
-                right = value;
-            }
+                Score = value
+            };
         }
     }
 }
