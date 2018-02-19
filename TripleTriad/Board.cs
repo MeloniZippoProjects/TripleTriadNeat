@@ -103,23 +103,22 @@ namespace TripleTriad
 
         private void ApplyRules(Field field)
         {
-            List<Field> comboCaptured = new List<Field>();
+            Stack<Field> comboCaptured = new Stack<Field>();
             if((rules & Rules.Same) == Rules.Same)
-                comboCaptured.AddRange(ApplySameRule(field));
+                foreach (var comboField in ApplySameRule(field))
+                    comboCaptured.Push(comboField);
 
             if ((rules & Rules.Plus) == Rules.Same)
-                comboCaptured.AddRange(ApplyPlusRule(field));
+                foreach (var comboField in ApplyPlusRule(field))
+                    comboCaptured.Push(comboField);
 
             while (comboCaptured.Count > 0)
             {
-                foreach (Field capturedField in comboCaptured)
-                    capturedField.Flip();
+                Field capturedField = comboCaptured.Pop();
+                capturedField.Flip();
 
-                List<Field> nextComboCaptured = new List<Field>();
-                foreach(Field comboField in comboCaptured)
-                    nextComboCaptured.AddRange(ApplyBaseRule(comboField));
-
-                comboCaptured = nextComboCaptured;
+                foreach (var comboField in ApplyBaseRule(capturedField))
+                    comboCaptured.Push(comboField);
             }
 
             var baseCaptured = ApplyBaseRule(field);
