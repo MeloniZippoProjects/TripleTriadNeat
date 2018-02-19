@@ -21,7 +21,7 @@ namespace TripleTriad
             set
             {
                 rules = value;
-                if ((rules | Rules.Elemental) == Rules.Elemental)
+                if ((rules & Rules.Elemental) == Rules.Elemental)
                 {
                     Random random = new Random(DateTime.Now.Millisecond);
                     foreach (var field in Fields.Cast<Field>().Where(f => !f.IsWall))
@@ -40,7 +40,7 @@ namespace TripleTriad
                     }
                 }
 
-                if ((rules | Rules.Samewall) == Rules.Samewall)
+                if ((rules & Rules.Samewall) == Rules.Samewall)
                 {
                     Wall.Card = new Card()
                     {
@@ -104,10 +104,10 @@ namespace TripleTriad
         private void ApplyRules(Field field)
         {
             List<Field> comboCaptured = new List<Field>();
-            if((rules | Rules.Same) == Rules.Same)
+            if((rules & Rules.Same) == Rules.Same)
                 comboCaptured.AddRange(ApplySameRule(field));
 
-            if ((rules | Rules.Plus) == Rules.Same)
+            if ((rules & Rules.Plus) == Rules.Same)
                 comboCaptured.AddRange(ApplyPlusRule(field));
 
             while (comboCaptured.Count > 0)
